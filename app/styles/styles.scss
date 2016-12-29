@@ -1,50 +1,104 @@
+$breakpoint-one: 540px;
+$breakpoint-two: 680px;
+$square-width-small: 295px;
+$square-width-medium: 150px;
+
 body {
-  // font: 14px "Century Gothic", Futura, sans-serif;
-  margin: 20px;
+  font-family: 'Inconsolata', monospace;
+  font-size: 60px;
 }
 
-ol, ul {
-  padding-left: 30px;
-}
+#container {
+  margin: auto;
+  margin-top: 40px;
+  width: 95%;
 
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
+  @media screen and (min-device-width: $breakpoint-one) {
+    font-size: 40px;
+    width: 80%;
+  }
 
-.status {
-  margin-bottom: 10px;
-}
+  @media screen and (min-device-width: $breakpoint-two) {
+    width: 50%;
+  }
 
-.square {
-  background: #fff;
-  border: 1px solid #999;
-  float: left;
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 34px;
-  height: 34px;
-  margin-right: -1px;
-  margin-top: -1px;
-  padding: 0;
-  text-align: center;
-  width: 34px;
-}
+  a {
+    color: #E94C6F;
+    text-decoration: none;
+    transition: color 0.1s;
 
-.square:focus {
-  outline: none;
-}
+    &:hover {
+      color:  #542733;
+    }
+  }
 
-.kbd-navigation .square:focus {
-  background: #ddd;
-}
+  ol, ul {
+    padding-left: 30px;
+  }
 
-.game {
-  display: flex;
-  flex-direction: row;
-}
+  .game-board {
+    margin-bottom: 20px;
+    margin-right: 30px;
+  }
 
-.game-info {
-  margin-left: 20px;
+  .board-row:after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+
+  .status {
+    margin-bottom: 10px;
+  }
+
+  .square {
+    background: #fff;
+    border: 1px solid #ccc;
+    float: left;
+    font-size: 100px;
+    line-height: $square-width-small;
+    height: $square-width-small;
+    margin-right: -1px;
+    margin-top: -1px;
+    padding: 0;
+    text-align: center;
+    width: $square-width-small;
+    transition: background 0.1s;
+
+    &:hover {
+      background: #f9f9f9;
+    }
+
+    @media screen and (min-device-width: $breakpoint-one) {
+      line-height: $square-width-medium;
+      height: $square-width-medium;
+      width: $square-width-medium;
+      font-size: 80px;
+    }
+
+    @media screen and (min-device-width: $breakpoint-two) {
+      // background-color: blue;
+    }
+  }
+
+  .square:focus {
+    outline: none;
+  }
+
+  .game {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .game-info {
+    margin: auto;
+    margin-top: 30px;
+    width: 50%;
+
+    li {
+      list-style-position: inside;
+    }
+  }
+
 }

@@ -9,6 +9,7 @@ import sass from 'gulp-sass';
 import size from 'gulp-size';
 import cssnano from 'gulp-cssnano';
 import autoprefixer from 'gulp-autoprefixer';
+import rename from 'gulp-rename';
 
 // Constants
 const reload = browserSync.reload;
@@ -48,6 +49,7 @@ gulp.task('styles', () => {
   .pipe(cssnano())
   .pipe(size({title: 'styles'}))
   .pipe(sourcemaps.write('./'))
+  .pipe(rename('styles.min.css'))
   .pipe(gulp.dest('.tmp/styles'));
 });
 
@@ -69,7 +71,7 @@ gulp.task('html', () => {
       removeStyleLinkTypeAttributes: true,
       // removeOptionalTags: true
     }))
-    .pipe(gulp.dest('.dist'));
+    .pipe(gulp.dest('dist'));
 });
 
 // Watch files for changes
