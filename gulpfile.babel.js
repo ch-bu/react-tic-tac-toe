@@ -11,6 +11,8 @@ import cssnano from 'gulp-cssnano';
 import autoprefixer from 'gulp-autoprefixer';
 import rename from 'gulp-rename';
 import babel from 'gulp-babel';
+import del from 'del';
+import runSequence from 'run-sequence';
 
 // Constants
 const reload = browserSync.reload;
@@ -75,6 +77,13 @@ gulp.task('html', () => {
     .pipe(gulp.dest('dist'));
 });
 
+/**
+ * Copy all concatenated files to dist directory
+ */
+gulp.task('copy-concat-files', () => {
+  gulp.src(['.tmp/**/*'])
+    .pipe(gulp.dest('dist'));
+});
 
 /**
  * Babel service worker
@@ -89,7 +98,7 @@ gulp.task('babel-sw', () => {
 });
 
 // Watch files for changes
-gulp.task('serve', ['webpack', 'styles', 'babel-sw'], () => {
+gulp.task('serve', ['clean', 'webpack', 'styles', 'babel-sw'], () => {
   browserSync({
       notify: false,
       port: 3000,
@@ -102,4 +111,21 @@ gulp.task('serve', ['webpack', 'styles', 'babel-sw'], () => {
   gulp.watch(['app/styles/*.scss'], ['styles', reload]);
   gulp.watch(['app/*.html'], reload);
   gulp.watch(['app/scripts/**/*'], ['webpack', reload]);
+});
+
+
+/**
+ * Clean output directory
+ */
+gulp.task('clean', () => del(['.tmp', 'dist'], {dot: true}));
+
+
+/**
+ * Build app for production
+ */
+gulp.task('default', ['clean', 'webpack', 'styles', 'babel-sw', 'html'], (cb) => {
+  runSequence(
+    ['copy-concat-files'],
+    cb
+  )
 });
