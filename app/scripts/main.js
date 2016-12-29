@@ -1,11 +1,8 @@
-import Hello from './components/hello.jsx';
+import Game from './components/game.jsx';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
 ReactDOM.render(
-  <Hello/>,
+  <Game/>,
   document.getElementById('container')
 );
-
-
-console.log('test');

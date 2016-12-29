@@ -2,7 +2,6 @@
 import gulp from 'gulp';
 import browserSync from 'browser-sync';
 import webpack from 'webpack-stream';
-import gulpLoadPlugins from 'gulp-load-plugins';
 import htmlmin from 'gulp-htmlmin';
 import newer from 'gulp-newer';
 import sourcemaps from 'gulp-sourcemaps';
@@ -13,7 +12,6 @@ import autoprefixer from 'gulp-autoprefixer';
 
 // Constants
 const reload = browserSync.reload;
-const $ = gulpLoadPlugins();
 
 // Bundle all javascript files
 gulp.task('webpack', () => {
