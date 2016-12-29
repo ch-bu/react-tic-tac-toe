@@ -10,6 +10,7 @@ import size from 'gulp-size';
 import cssnano from 'gulp-cssnano';
 import autoprefixer from 'gulp-autoprefixer';
 import rename from 'gulp-rename';
+import babel from 'gulp-babel';
 
 // Constants
 const reload = browserSync.reload;
@@ -74,8 +75,21 @@ gulp.task('html', () => {
     .pipe(gulp.dest('dist'));
 });
 
+
+/**
+ * Babel service worker
+ */
+gulp.task('babel-sw', () => {
+  gulp.src('app/service-worker.js')
+    .pipe(babel({
+      presets: ['es2015']
+    }))
+    .pipe(rename('sw.js'))
+    .pipe(gulp.dest(('.tmp/')));
+});
+
 // Watch files for changes
-gulp.task('serve', ['webpack', 'styles'], () => {
+gulp.task('serve', ['webpack', 'styles', 'babel-sw'], () => {
   browserSync({
       notify: false,
       port: 3000,
@@ -84,6 +98,7 @@ gulp.task('serve', ['webpack', 'styles'], () => {
       }
   });
 
+  gulp.watch(['app/service-worker.js'], ['babel-sw', reload]);
   gulp.watch(['app/styles/*.scss'], ['styles', reload]);
   gulp.watch(['app/*.html'], reload);
   gulp.watch(['app/scripts/**/*'], ['webpack', reload]);
